@@ -17,14 +17,14 @@ img{max-width:100%;height:auto;display:block}
 /* ============================================
    PRELOADER
    ============================================ */
-#preloader{position:fixed;inset:0;background:#ffffff;z-index:99999;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
+#preloader{position:fixed;inset:0;background:radial-gradient(circle at top right, rgba(51,149,255,0.2) 0%, #050505 60%);z-index:99999;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
 .preloader-content{display:flex;flex-direction:column;align-items:center;gap:24px}
 .shimmer-logo-container{position:relative;width:200px;height:160px}
-.preloader-logo-base{position:absolute;inset:0;background-color:#E5E7EB;-webkit-mask-image:url('assets/logo.png');-webkit-mask-size:contain;-webkit-mask-repeat:no-repeat;-webkit-mask-position:center bottom;mask-image:url('assets/logo.png');mask-size:contain;mask-repeat:no-repeat;mask-position:center bottom}
-.preloader-logo-shimmer{position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,0.8) 50%,transparent 80%);background-size:200% 100%;animation:shimmerBg 1.5s infinite ease-in-out}
+.preloader-logo-base{position:absolute;inset:0;background-color:rgba(255,255,255,0.15);-webkit-mask-image:url('assets/logo.png');-webkit-mask-size:contain;-webkit-mask-repeat:no-repeat;-webkit-mask-position:center bottom;mask-image:url('assets/logo.png');mask-size:contain;mask-repeat:no-repeat;mask-position:center bottom}
+.preloader-logo-shimmer{position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,0.3) 50%,transparent 80%);background-size:200% 100%;animation:shimmerBg 1.5s infinite ease-in-out}
 .preloader-logo-reveal{position:absolute;bottom:0;left:0;width:100%;height:0%;overflow:hidden}
 .preloader-logo-reveal img{position:absolute;bottom:0;left:0;width:200px;height:160px;object-fit:contain;object-position:center bottom}
-.loading-counter{font-family:'Manrope',sans-serif;font-size:32px;font-weight:800;color:#111;letter-spacing:-0.03em}
+.loading-counter{font-family:'Manrope',sans-serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:-0.03em}
 
 @keyframes shimmerBg {
     0% { background-position: 200% center; }
