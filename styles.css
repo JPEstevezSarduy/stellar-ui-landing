@@ -17,7 +17,7 @@ img{max-width:100%;height:auto;display:block}
 /* ============================================
    PRELOADER
    ============================================ */
-#preloader{position:fixed;inset:0;background:radial-gradient(circle at top right, rgba(51,149,255,0.2) 0%, #050505 60%);z-index:99999;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
+#preloader{position:fixed;inset:0;background:radial-gradient(circle at top right, rgba(51,149,255,0.07) 0%, #020202 70%);z-index:99999;display:flex;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
 .preloader-content{display:flex;flex-direction:column;align-items:center;gap:24px}
 .shimmer-logo-container{position:relative;width:200px;height:160px}
 .preloader-logo-base{position:absolute;inset:0;background-color:rgba(255,255,255,0.15);-webkit-mask-image:url('assets/logo.png');-webkit-mask-size:contain;-webkit-mask-repeat:no-repeat;-webkit-mask-position:center bottom;mask-image:url('assets/logo.png');mask-size:contain;mask-repeat:no-repeat;mask-position:center bottom}
