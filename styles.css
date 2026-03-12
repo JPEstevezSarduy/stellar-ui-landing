@@ -24,7 +24,7 @@ img{max-width:100%;height:auto;display:block}
 .preloader-logo-shimmer{position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,0.3) 50%,transparent 80%);background-size:200% 100%;animation:shimmerBg 1.5s infinite ease-in-out}
 .preloader-logo-reveal{position:absolute;bottom:0;left:0;width:100%;height:0%;overflow:hidden}
 .preloader-logo-reveal img{position:absolute;bottom:0;left:0;width:200px;height:160px;object-fit:contain;object-position:center bottom}
-.loading-counter{font-family:'Manrope',sans-serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:-0.03em}
+.loading-counter{font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:#00f0ff;letter-spacing:0.2em;margin-top:-10px}
 
 @keyframes shimmerBg {
     0% { background-position: 200% center; }
