@@ -1,139 +1,66 @@
-// ============================================
-// STELLAR - Animations & Interactions
-// ============================================
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    // --- Scroll-triggered fade-in animations ---
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const fadeObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                fadeObserver.unobserve(entry.target);
-            }
+    // Scroll-triggered fade-in
+    const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }
         });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // Observe sections that should animate on scroll
-    document.querySelectorAll('.components-section, .courses-section, .stats-section, .testimonial-section, .cta-section, .course-list-item, .component-feature').forEach(el => {
-        el.classList.add('scroll-fade');
-        fadeObserver.observe(el);
+    document.querySelectorAll('.bento-card, .course-card, .craft-feature, .hex-item, .big-testimonial, .big-testimonial-author').forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        obs.observe(el);
     });
 
-    // --- Navbar background on scroll ---
-    const navbar = document.querySelector('.navbar');
-    let lastScroll = 0;
-
+    // Navbar scroll effect
+    const nav = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-
-        if (scrollY > 100) {
-            navbar.style.background = 'rgba(0, 0, 0, 0.85)';
-        } else {
-            navbar.style.background = 'rgba(0, 0, 0, 0.6)';
-        }
-
-        lastScroll = scrollY;
+        nav.style.background = window.scrollY > 80 ? 'rgba(5,5,5,0.9)' : 'rgba(5,5,5,0.7)';
     }, { passive: true });
 
-    // --- Sidebar item hover effect ---
+    // Tab interactions
+    document.querySelectorAll('.style-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            tab.parentElement.querySelectorAll('.style-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+        });
+    });
+
     document.querySelectorAll('.sidebar-item').forEach(item => {
         item.addEventListener('click', () => {
-            document.querySelectorAll('.sidebar-item.active').forEach(a => a.classList.remove('active'));
+            item.closest('.bento-sidebar').querySelectorAll('.sidebar-item.active').forEach(a => a.classList.remove('active'));
             item.classList.add('active');
         });
     });
 
-    // --- Style tabs interaction ---
-    document.querySelectorAll('.style-tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.style-tab.active').forEach(a => a.classList.remove('active'));
-            tab.classList.add('active');
-        });
-    });
-
-    // --- Stats period tabs ---
-    document.querySelectorAll('.stats-period span').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.stats-period span.active').forEach(a => a.classList.remove('active'));
-            tab.classList.add('active');
-        });
-    });
-
-    // --- Stats date tabs ---
-    document.querySelectorAll('.stats-dates span').forEach(tab => {
-        tab.addEventListener('click', () => {
-            document.querySelectorAll('.stats-dates span.active').forEach(a => a.classList.remove('active'));
-            tab.classList.add('active');
-        });
-    });
-
-    // --- Counter animation for 110k ---
-    const statsNumber = document.querySelector('.stats-number');
-    if (statsNumber) {
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounter(statsNumber, 0, 110, 2000);
-                    statsObserver.unobserve(entry.target);
+    // Counter animation for 110k
+    const statsNum = document.querySelector('.stats-number');
+    if (statsNum) {
+        const sObs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    animateCount(statsNum, 0, 110, 2000);
+                    sObs.unobserve(e.target);
                 }
             });
         }, { threshold: 0.5 });
-
-        statsObserver.observe(statsNumber);
+        sObs.observe(statsNum);
     }
 
-    function animateCounter(el, start, end, duration) {
-        const startTime = performance.now();
-
-        function update(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
-            const current = Math.round(start + (end - start) * eased);
-            el.textContent = current + 'k';
-
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
+    function animateCount(el, start, end, dur) {
+        const t0 = performance.now();
+        function tick(t) {
+            const p = Math.min((t - t0) / dur, 1);
+            const ease = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(start + (end - start) * ease) + 'k';
+            if (p < 1) requestAnimationFrame(tick);
         }
-
-        requestAnimationFrame(update);
+        requestAnimationFrame(tick);
     }
-
-    // --- Radius slider interaction ---
-    const radiusSlider = document.querySelector('.radius-slider');
-    if (radiusSlider) {
-        const flightInner = document.querySelector('.flight-card-inner');
-        radiusSlider.addEventListener('input', (e) => {
-            if (flightInner) {
-                flightInner.style.borderRadius = e.target.value + 'px';
-            }
-            const label = radiusSlider.closest('.radius-control').querySelector('span');
-            if (label) {
-                label.textContent = 'Corner Radius: ' + e.target.value;
-            }
-        });
-    }
-
 });
 
-// --- Add CSS for scroll animations ---
-const style = document.createElement('style');
-style.textContent = `
-    .scroll-fade {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.7s ease-out, transform 0.7s ease-out;
-    }
-    .scroll-fade.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-`;
-document.head.appendChild(style);
+// Visibility class
+const s = document.createElement('style');
+s.textContent = '.vis{opacity:1 !important;transform:translateY(0) !important}';
+document.head.appendChild(s);
