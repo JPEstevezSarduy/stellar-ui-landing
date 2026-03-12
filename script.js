@@ -1,4 +1,32 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Preloader Percentage Logic
+    const preloader = document.getElementById('preloader');
+    const counterElement = document.getElementById('counter');
+    const logoReveal = document.getElementById('logo-reveal');
+    
+    if (preloader && counterElement && logoReveal) {
+        let count = 0;
+        const duration = 2000;
+        const interval = 20;
+
+        const timer = setInterval(() => {
+            count += (100 / (duration / interval));
+            if (count >= 100) {
+                count = 100;
+                clearInterval(timer);
+                setTimeout(() => {
+                    preloader.style.opacity = '0';
+                    setTimeout(() => {
+                        preloader.style.visibility = 'hidden';
+                        preloader.style.display = 'none';
+                    }, 600);
+                }, 400);
+            }
+            counterElement.textContent = Math.floor(count);
+            logoReveal.style.height = `${Math.floor(count)}%`;
+        }, interval);
+    }
+
     // Scroll-triggered fade-in
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
