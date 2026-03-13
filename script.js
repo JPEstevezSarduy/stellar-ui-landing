@@ -1,13 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Preloader Stars Generation
+    const starsContainer = document.getElementById('stars-container');
+    if (starsContainer) {
+        for (let i = 0; i < 80; i++) {
+            const star = document.createElement('div');
+            star.classList.add('preloader-star');
+            const size = Math.random() * 2 + 0.5;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            star.style.opacity = Math.random() * 0.7 + 0.1;
+            starsContainer.appendChild(star);
+        }
+    }
+
     // Preloader Percentage Logic
     const preloader = document.getElementById('preloader');
     const counterElement = document.getElementById('counter');
-    const logoReveal = document.getElementById('logo-reveal');
+    const progressCircle = document.getElementById('preloader-progress');
+    const thumbContainer = document.getElementById('preloader-thumb-container');
     
-    if (preloader && counterElement && logoReveal) {
+    if (preloader && counterElement && progressCircle && thumbContainer) {
         let count = 0;
         const duration = 2000;
         const interval = 20;
+        const totalLength = 515.22; 
 
         const timer = setInterval(() => {
             count += (100 / (duration / interval));
@@ -23,7 +41,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 400);
             }
             counterElement.textContent = Math.floor(count);
-            logoReveal.style.height = `${Math.floor(count)}%`;
+            
+            const offset = totalLength - (totalLength * (count / 100));
+            progressCircle.style.strokeDashoffset = offset;
+            
+            const rotation = (count / 100) * 360;
+            thumbContainer.style.transform = `rotate(${rotation}deg)`;
         }, interval);
     }
 
