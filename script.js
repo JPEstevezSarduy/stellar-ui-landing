@@ -18,8 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Preloader Percentage Logic
     const preloader = document.getElementById('preloader');
     const counterElement = document.getElementById('counter');
+    const lineProgress = document.getElementById('preloader-line');
 
-    if (preloader && counterElement) {
+    if (preloader && counterElement && lineProgress) {
         let count = 0;
         const duration = 2000;
         const interval = 20;
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 400);
             }
             counterElement.textContent = Math.floor(count);
+            lineProgress.style.width = count + '%';
         }, interval);
     }
 

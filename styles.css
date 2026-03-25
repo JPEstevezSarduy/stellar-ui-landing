@@ -75,6 +75,24 @@ img{max-width:100%;height:auto;display:block}
     text-align: center;
 }
 
+.preloader-line-track {
+    width: 200px;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.preloader-line-fill {
+    height: 100%;
+    width: 0%;
+    background: #00e5ff;
+    border-radius: 4px;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff;
+}
+
 /* NAV */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(5,5,5,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
 .nav-container{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
