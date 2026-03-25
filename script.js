@@ -18,14 +18,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Preloader Percentage Logic
     const preloader = document.getElementById('preloader');
     const counterElement = document.getElementById('counter');
-    const progressCircle = document.getElementById('preloader-progress');
-    const thumbContainer = document.getElementById('preloader-thumb-container');
-    
-    if (preloader && counterElement && progressCircle && thumbContainer) {
+
+    if (preloader && counterElement) {
         let count = 0;
         const duration = 2000;
         const interval = 20;
-        const totalLength = 515.22; 
 
         const timer = setInterval(() => {
             count += (100 / (duration / interval));
@@ -41,12 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 400);
             }
             counterElement.textContent = Math.floor(count);
-            
-            const offset = totalLength - (totalLength * (count / 100));
-            progressCircle.style.strokeDashoffset = offset;
-            
-            const rotation = (count / 100) * 360;
-            thumbContainer.style.transform = `rotate(${rotation}deg)`;
         }, interval);
     }
 
