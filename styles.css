@@ -94,15 +94,28 @@ img{max-width:100%;height:auto;display:block}
 }
 
 /* NAV */
-.navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;background:rgba(5,5,5,0.7);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.nav-container{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:100;padding:10px 40px;background:rgba(5,5,5,0.75);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-container{width:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-left{flex:0 0 auto}
 .logo{display:flex;align-items:center;gap:8px;font-family:'Manrope',sans-serif;font-weight:700;font-size:17px}
-.nav-center{display:flex;gap:32px}
-.nav-link{font-size:14px;color:var(--t50);transition:color .2s}
+.nav-center{display:flex;gap:32px;flex:1;justify-content:center}
+.nav-link{font-size:14px;color:var(--t50);transition:color .2s;white-space:nowrap}
 .nav-link:hover{color:var(--t)}
-.nav-right{display:flex;align-items:center;gap:20px}
-.btn-signup{font-size:13px;padding:8px 20px;background:var(--t);color:var(--bg);border-radius:100px;font-weight:500;box-shadow:rgba(0,0,0,0.1) 0px 10px 10px 0px,rgba(0,0,0,0.05) 0px 4px 4px 0px,rgba(255,255,255,0.1) 0px 1px 22px 0px,rgba(197,204,255,0.2) 0px 0px 20px 0px inset,rgba(198,219,255,0.35) 0px 1px 3px 0px inset}
+.nav-right{flex:0 0 auto;display:flex;align-items:center;gap:16px}
+.btn-signup{font-size:13px;padding:8px 22px;background:var(--t);color:var(--bg);border-radius:100px;font-weight:600;white-space:nowrap;box-shadow:rgba(0,0,0,0.1) 0px 10px 10px 0px,rgba(0,0,0,0.05) 0px 4px 4px 0px,rgba(255,255,255,0.1) 0px 1px 22px 0px,rgba(197,204,255,0.2) 0px 0px 20px 0px inset,rgba(198,219,255,0.35) 0px 1px 3px 0px inset}
 .btn-signup:hover{opacity:.85}
+/* Hamburger — solo móvil */
+.nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.nav-hamburger span{display:block;width:22px;height:2px;background:var(--t);border-radius:2px;transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+/* Mobile menu drawer */
+.nav-mobile-menu{display:none;flex-direction:column;gap:0;position:fixed;top:60px;left:0;right:0;background:rgba(8,8,8,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);z-index:99;padding:8px 0 16px}
+.nav-mobile-menu.open{display:flex}
+.nav-mobile-menu a{padding:14px 40px;font-size:15px;color:var(--t50);border-bottom:1px solid var(--border);transition:color .2s}
+.nav-mobile-menu a:last-child{border-bottom:none}
+.nav-mobile-menu a:hover{color:var(--t)}
 
 /* HERO */
 .hero{padding:0;text-align:center;position:relative;overflow:hidden;min-height:95vh;display:flex;flex-direction:column;justify-content:flex-end}
@@ -409,7 +422,10 @@ img.avatar{background:none}
 /* ============================================
    RESPONSIVE
    ============================================ */
+
+/* TABLET GRANDE (1024px) */
 @media(max-width:1100px){
+    .navbar{padding:10px 28px}
     .bento-row-1{grid-template-columns:160px 1fr 1fr}
     .bento-row-1 .bento-modular{display:none}
     .bento-row-2{grid-template-columns:1fr 1fr 1fr}
@@ -417,21 +433,81 @@ img.avatar{background:none}
     .bento-row-2 .bento-notifications{display:none}
     .craft-container{grid-template-columns:1fr}
     .courses-row-top{grid-template-columns:1fr 1fr}
+    .footer-cols{gap:48px}
 }
+
+/* TABLET (768px – 1024px) */
+@media(max-width:900px){
+    .navbar{padding:10px 24px}
+    .nav-center{gap:20px}
+    .nav-center .nav-link{font-size:13px}
+    .hero-title{font-size:clamp(30px,5.5vw,60px)}
+    .stats-container{gap:24px}
+    .hex-item{width:120px;height:70px}
+    .footer-top{grid-template-columns:1fr 1fr;gap:40px}
+}
+
+/* TABLET PEQUEÑA / MÓVIL GRANDE (768px) */
 @media(max-width:768px){
+    /* Navbar — hamburger */
+    .navbar{padding:10px 20px}
     .nav-center{display:none}
-    .hero{padding:130px 20px 50px}
+    .nav-right .nav-link{display:none}          /* ocultar "Log in" en móvil */
+    .nav-hamburger{display:flex}
+
+    /* Hero */
+    .hero{min-height:100svh}
+    .hero-content{padding:0 20px 56px}
+    .hero-title{font-size:clamp(28px,8vw,48px)}
+    .hero-subtitle{font-size:14px;max-width:100%}
+    .btn-trial{padding:12px 28px;font-size:11px}
+
+    /* Bento */
+    .bento-section{padding:30px 16px 40px}
     .bento-row-1{grid-template-columns:1fr}
     .bento-row-1 .bento-progress{display:none}
     .bento-row-2{grid-template-columns:1fr}
     .bento-row-3{grid-template-columns:1fr}
+
+    /* Craft */
+    .craft-section{padding:56px 16px}
+
+    /* Courses */
+    .courses-bento{padding:40px 16px}
     .courses-row-top,.courses-row-bottom{grid-template-columns:1fr}
     .course-uikits{flex-direction:column !important}
-    .stats-container{flex-direction:column;text-align:center}
-    .hex-item{width:110px;height:64px}
-    .footer-top{grid-template-columns:1fr;gap:30px}
-    .footer-cols{flex-wrap:wrap;gap:30px}
+
+    /* Stats */
+    .stats-section{padding:56px 16px 30px}
+    .stats-container{flex-direction:column;align-items:center;text-align:center;gap:24px}
+    .stats-number{font-size:clamp(60px,18vw,90px)}
+
+    /* Hex */
+    .hex-item{width:90px;height:54px}
+    .hex-logo-text{font-size:12px}
+
+    /* Footer */
+    .footer{padding:40px 16px 20px}
+    .footer-top{grid-template-columns:1fr;gap:28px}
+    .footer-cols{flex-wrap:wrap;gap:24px}
     .footer-bottom{flex-direction:column;gap:12px;text-align:center}
+
+    /* Skyscape */
     .skyscape-body{grid-template-columns:1fr}
     .skyscape-filters{display:none}
+}
+
+/* MÓVIL PEQUEÑO (480px) */
+@media(max-width:480px){
+    .navbar{padding:8px 16px}
+    .logo img{height:38px !important}
+    .btn-signup{font-size:12px;padding:7px 16px}
+    .hero-title{font-size:clamp(26px,9vw,40px)}
+    .hero-badge{font-size:11px;padding:6px 14px;margin-bottom:20px}
+    .bento-card{padding:14px}
+    .hex-row{gap:8px}
+    .hex-item{width:76px;height:46px}
+    .hex-logo-text{font-size:10px}
+    .stats-number{font-size:clamp(54px,20vw,80px)}
+    .footer-cols{flex-direction:column;gap:20px}
 }

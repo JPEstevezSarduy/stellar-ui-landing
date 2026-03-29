@@ -60,8 +60,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navbar scroll effect
     const nav = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {
-        nav.style.background = window.scrollY > 80 ? 'rgba(5,5,5,0.9)' : 'rgba(5,5,5,0.7)';
+        nav.style.background = window.scrollY > 80 ? 'rgba(5,5,5,0.95)' : 'rgba(5,5,5,0.75)';
     }, { passive: true });
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+        });
+        // Cerrar menú al hacer click en un link
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+            });
+        });
+        // Cerrar al hacer scroll
+        window.addEventListener('scroll', () => {
+            if (mobileMenu.classList.contains('open')) {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.remove('open');
+            }
+        }, { passive: true });
+    }
 
     // Tab interactions
     document.querySelectorAll('.style-tab').forEach(tab => {
