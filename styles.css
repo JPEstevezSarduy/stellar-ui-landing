@@ -118,15 +118,18 @@ img{max-width:100%;height:auto;display:block}
 .nav-mobile-menu a:hover{color:var(--t)}
 
 /* HERO */
-.hero{padding:0;position:relative;overflow:hidden;min-height:95vh;display:flex;align-items:center;justify-content:center}
+.hero{padding:0;position:relative;overflow:hidden;min-height:95vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .hero::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.15);pointer-events:none;z-index:1}
 /* Hero Background Video */
 .hero-video-background{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .hero-video-background video{width:100%;height:100%;object-fit:cover}
 .hero-video-overlay{display:none}
 
-/* Hero Floating Cards Container */
-.hero-cards{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;padding:24px}
+/* Hero Floating Cards — zona central */
+.hero-cards{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;padding:24px;flex:1}
+
+/* Hero CTA — anclado al fondo */
+.hero-cta-bar{position:relative;z-index:3;width:100%;display:flex;justify-content:center;padding-bottom:56px}
 
 /* Base card glass */
 .hcard{background:rgba(12,12,14,0.82);border:1px solid rgba(255,255,255,0.1);border-radius:22px;backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);box-shadow:0 8px 40px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.07);padding:22px 24px}
