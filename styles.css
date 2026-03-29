@@ -423,91 +423,165 @@ img.avatar{background:none}
    RESPONSIVE
    ============================================ */
 
-/* TABLET GRANDE (1024px) */
+/* =============================================
+   TABLET GRANDE — 1100px
+   Secciones: Bento Grid, Craft, Courses, Footer
+   ============================================= */
 @media(max-width:1100px){
     .navbar{padding:10px 28px}
+
+    /* 3 — Bento Grid */
     .bento-row-1{grid-template-columns:160px 1fr 1fr}
     .bento-row-1 .bento-modular{display:none}
     .bento-row-2{grid-template-columns:1fr 1fr 1fr}
     .bento-row-2 .bento-98{display:none}
     .bento-row-2 .bento-notifications{display:none}
+
+    /* 5 — Craft */
     .craft-container{grid-template-columns:1fr}
+    .craft-98{display:none} /* badge absoluto — se solapa en 1 columna */
+
+    /* 6 — Courses */
     .courses-row-top{grid-template-columns:1fr 1fr}
+
+    /* 9 — Footer */
     .footer-cols{gap:48px}
 }
 
-/* TABLET (768px – 1024px) */
+/* =============================================
+   TABLET MEDIANA — 900px
+   Secciones: Navbar, Hero, Bento, Stats, Hex, Footer
+   ============================================= */
 @media(max-width:900px){
+    /* 2 — Navbar */
     .navbar{padding:10px 24px}
-    .nav-center{gap:20px}
+    .nav-center{gap:18px}
     .nav-center .nav-link{font-size:13px}
+
+    /* 3 — Hero */
     .hero-title{font-size:clamp(30px,5.5vw,60px)}
+
+    /* 4 — Bento row-2: reducir a 2 columnas */
+    .bento-row-2{grid-template-columns:1fr 1fr}
+
+    /* 7 — Stats */
     .stats-container{gap:24px}
+    .stats-title{font-size:clamp(22px,3vw,36px)}
+
+    /* 7 — Hex logos */
     .hex-item{width:120px;height:70px}
+    .hex-logo-text{font-size:14px}
+
+    /* 9 — Footer */
     .footer-top{grid-template-columns:1fr 1fr;gap:40px}
 }
 
-/* TABLET PEQUEÑA / MÓVIL GRANDE (768px) */
+/* =============================================
+   TABLET PEQUEÑA / MÓVIL GRANDE — 768px
+   Todas las secciones
+   ============================================= */
 @media(max-width:768px){
-    /* Navbar — hamburger */
+    /* 2 — Navbar: hamburger */
     .navbar{padding:10px 20px}
     .nav-center{display:none}
-    .nav-right .nav-link{display:none}          /* ocultar "Log in" en móvil */
+    .nav-right .nav-link{display:none}
     .nav-hamburger{display:flex}
 
-    /* Hero */
+    /* 3 — Hero */
     .hero{min-height:100svh}
     .hero-content{padding:0 20px 56px}
     .hero-title{font-size:clamp(28px,8vw,48px)}
     .hero-subtitle{font-size:14px;max-width:100%}
     .btn-trial{padding:12px 28px;font-size:11px}
 
-    /* Bento */
+    /* 4 — Bento Grid */
     .bento-section{padding:30px 16px 40px}
     .bento-row-1{grid-template-columns:1fr}
     .bento-row-1 .bento-progress{display:none}
     .bento-row-2{grid-template-columns:1fr}
     .bento-row-3{grid-template-columns:1fr}
+    .bento-card{min-width:0} /* evita overflow horizontal */
 
-    /* Craft */
+    /* 5 — Craft Section */
     .craft-section{padding:56px 16px}
+    .craft-title{font-size:clamp(26px,6vw,40px)}
+    .craft-98{display:none}
+    /* Skyscape app: tabs scrollables en móvil */
+    .skyscape-tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;gap:12px;padding-bottom:2px}
+    .skyscape-tabs::-webkit-scrollbar{display:none}
+    .skyscape-body{grid-template-columns:1fr}
+    .skyscape-filters{display:none}
 
-    /* Courses */
+    /* 6 — Courses */
     .courses-bento{padding:40px 16px}
     .courses-row-top,.courses-row-bottom{grid-template-columns:1fr}
     .course-uikits{flex-direction:column !important}
+    .course-card{padding:20px}
 
-    /* Stats */
+    /* 7 — Stats */
     .stats-section{padding:56px 16px 30px}
     .stats-container{flex-direction:column;align-items:center;text-align:center;gap:24px}
+    .stats-title{max-width:100%}
     .stats-number{font-size:clamp(60px,18vw,90px)}
 
-    /* Hex */
+    /* 7 — Hex logos grid */
+    .hex-grid{padding:40px 0}
     .hex-item{width:90px;height:54px}
     .hex-logo-text{font-size:12px}
+    .hex-row{gap:10px}
 
-    /* Footer */
+    /* 8 — Testimonial */
+    .testimonial-section{padding:30px 20px 60px}
+    .testimonial-container{max-width:100%}
+    .big-testimonial p{font-size:14px;line-height:1.75}
+
+    /* 9 — Footer */
     .footer{padding:40px 16px 20px}
     .footer-top{grid-template-columns:1fr;gap:28px}
     .footer-cols{flex-wrap:wrap;gap:24px}
+    .footer-col{min-width:120px}
     .footer-bottom{flex-direction:column;gap:12px;text-align:center}
-
-    /* Skyscape */
-    .skyscape-body{grid-template-columns:1fr}
-    .skyscape-filters{display:none}
+    .footer-legal{flex-wrap:wrap;justify-content:center;gap:16px}
 }
 
-/* MÓVIL PEQUEÑO (480px) */
+/* =============================================
+   MÓVIL PEQUEÑO — 480px
+   Ajustes finos para pantallas < 480px
+   ============================================= */
 @media(max-width:480px){
+    /* 2 — Navbar */
     .navbar{padding:8px 16px}
-    .logo img{height:38px !important}
-    .btn-signup{font-size:12px;padding:7px 16px}
-    .hero-title{font-size:clamp(26px,9vw,40px)}
-    .hero-badge{font-size:11px;padding:6px 14px;margin-bottom:20px}
+    .logo img{height:36px !important}
+    .btn-signup{font-size:12px;padding:7px 14px}
+
+    /* 3 — Hero */
+    .hero-title{font-size:clamp(24px,9vw,38px)}
+    .hero-badge{font-size:11px;padding:6px 14px;margin-bottom:18px}
+    .hero-subtitle{font-size:13px}
+
+    /* 4 — Bento */
     .bento-card{padding:14px}
-    .hex-row{gap:8px}
-    .hex-item{width:76px;height:46px}
-    .hex-logo-text{font-size:10px}
+
+    /* 5 — Craft */
+    .craft-title{font-size:clamp(22px,7vw,34px)}
+    .craft-container{gap:36px}
+
+    /* 6 — Courses */
+    .course-card{padding:18px}
+    .glass-icons{flex-wrap:wrap;gap:8px}
+
+    /* 7 — Stats + Hex */
     .stats-number{font-size:clamp(54px,20vw,80px)}
+    .hex-row{gap:8px}
+    .hex-item{width:74px;height:44px}
+    .hex-logo-text{font-size:10px}
+
+    /* 8 — Testimonial */
+    .big-testimonial p{font-size:13px}
+    .testimonial-section{padding:24px 16px 48px}
+
+    /* 9 — Footer */
     .footer-cols{flex-direction:column;gap:20px}
+    .social-icons{gap:10px}
+    .social-icon{width:32px;height:32px}
 }
