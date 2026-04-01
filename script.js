@@ -57,17 +57,18 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: ping-pong (rebote) — ida y vuelta infinita sin corte
+    // Hero video: ping-pong parcial — rebota entre segundo 5 y el final
     const heroVideo = document.querySelector('.hero-video-background video');
     if (heroVideo) {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             heroVideo.pause();
         }
 
+        const BOUNCE_POINT = 5;       // segundo al que regresa en reversa
+        const REVERSE_STEP = 1 / 30;  // ~30fps step size
         let reversing = false;
-        const REVERSE_STEP = 1 / 30; // ~30fps step size for reverse playback
 
-        // When forward playback ends, start reversing
+        // Cuando termina el forward, empieza a retroceder
         heroVideo.addEventListener('ended', () => {
             heroVideo.pause();
             reversing = true;
@@ -77,12 +78,12 @@ document.addEventListener('DOMContentLoaded', () => {
         function reversePlayback() {
             if (!reversing) return;
 
-            heroVideo.currentTime = Math.max(0, heroVideo.currentTime - REVERSE_STEP);
+            heroVideo.currentTime = Math.max(BOUNCE_POINT, heroVideo.currentTime - REVERSE_STEP);
 
-            if (heroVideo.currentTime <= 0) {
-                // Reached the start — switch back to forward playback
+            if (heroVideo.currentTime <= BOUNCE_POINT) {
+                // Llegó al segundo 5 — vuelve a ir hacia adelante
                 reversing = false;
-                heroVideo.currentTime = 0;
+                heroVideo.currentTime = BOUNCE_POINT;
                 heroVideo.play();
                 return;
             }
