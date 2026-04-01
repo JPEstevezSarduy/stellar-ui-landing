@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(python src/ui-ux-pro-max/scripts/search.py \"provider card dark glassmorphism\" --domain style)",
+      "Bash(python src/ui-ux-pro-max/scripts/search.py \"brand logo card showcase\" --domain landing)"
+    ]
+  }
+}
