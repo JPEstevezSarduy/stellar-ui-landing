@@ -57,27 +57,38 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: loop seamless con crossfade a negro (sin corte visible)
+    // Hero video: ping-pong (rebote) — ida y vuelta infinita sin corte
     const heroVideo = document.querySelector('.hero-video-background video');
     if (heroVideo) {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             heroVideo.pause();
         }
-        const LOOP_POINT = 3;
-        const FADE_TIME = 0.6;
-        let fading = false;
-        heroVideo.addEventListener('timeupdate', () => {
-            if (!fading && heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - FADE_TIME) {
-                fading = true;
-                heroVideo.style.opacity = '0';
-                setTimeout(() => {
-                    heroVideo.currentTime = heroVideo.duration - LOOP_POINT;
-                    heroVideo.play();
-                    heroVideo.style.opacity = '1';
-                    fading = false;
-                }, FADE_TIME * 1000);
-            }
+
+        let reversing = false;
+        const REVERSE_STEP = 1 / 30; // ~30fps step size for reverse playback
+
+        // When forward playback ends, start reversing
+        heroVideo.addEventListener('ended', () => {
+            heroVideo.pause();
+            reversing = true;
+            reversePlayback();
         });
+
+        function reversePlayback() {
+            if (!reversing) return;
+
+            heroVideo.currentTime = Math.max(0, heroVideo.currentTime - REVERSE_STEP);
+
+            if (heroVideo.currentTime <= 0) {
+                // Reached the start — switch back to forward playback
+                reversing = false;
+                heroVideo.currentTime = 0;
+                heroVideo.play();
+                return;
+            }
+
+            requestAnimationFrame(reversePlayback);
+        }
     }
 
     // Navbar scroll effect
