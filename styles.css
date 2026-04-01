@@ -123,7 +123,7 @@ img{max-width:100%;height:auto;display:block}
 
 /* Hero Background Video — sin bordes, video completo */
 .hero-video-background{position:relative;z-index:1;width:100%;pointer-events:none;display:flex;align-items:center;justify-content:center}
-.hero-video-background video{display:block;max-width:100%;max-height:calc(100svh - 64px);height:auto;width:auto}
+.hero-video-background video{display:block;max-width:100%;max-height:calc(100svh - 64px);height:auto;width:auto;transition:opacity 0.6s ease}
 
 /* Hero Floating Cards — zona central */
 .hero-cards{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;padding:24px;flex:1}

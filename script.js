@@ -57,10 +57,27 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Prefers-reduced-motion: pausar video de fondo si el usuario lo prefiere
+    // Hero video: loop seamless con crossfade a negro (sin corte visible)
     const heroVideo = document.querySelector('.hero-video-background video');
-    if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        heroVideo.pause();
+    if (heroVideo) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            heroVideo.pause();
+        }
+        const LOOP_POINT = 3;
+        const FADE_TIME = 0.6;
+        let fading = false;
+        heroVideo.addEventListener('timeupdate', () => {
+            if (!fading && heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - FADE_TIME) {
+                fading = true;
+                heroVideo.style.opacity = '0';
+                setTimeout(() => {
+                    heroVideo.currentTime = heroVideo.duration - LOOP_POINT;
+                    heroVideo.play();
+                    heroVideo.style.opacity = '1';
+                    fading = false;
+                }, FADE_TIME * 1000);
+            }
+        });
     }
 
     // Navbar scroll effect
