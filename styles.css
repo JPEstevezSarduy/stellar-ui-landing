@@ -121,6 +121,13 @@ img{max-width:100%;height:auto;display:block}
 .hero{padding:0;position:relative;overflow:hidden;margin-top:64px;background:#000;display:flex;align-items:center;justify-content:center}
 .hero::before{display:none}
 
+/* Hero Ambient Particle Layer — aparece al terminar el video */
+.hero-ambient-layer{position:absolute;inset:-15%;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.5s ease-in}
+.hero-ambient-layer.active{opacity:1}
+.hero-ambient-layer img{width:100%;height:100%;object-fit:cover;mix-blend-mode:screen;animation:ambientRotate 30s linear infinite,ambientGlow 10s ease-in-out infinite}
+@keyframes ambientRotate{from{transform:rotate(0deg) scale(1.2)}to{transform:rotate(360deg) scale(1.2)}}
+@keyframes ambientGlow{0%,100%{filter:brightness(0.8) saturate(1.1);opacity:0.55}50%{filter:brightness(1.3) saturate(1.4);opacity:0.8}}
+
 /* Hero Background Video — sin bordes, video completo */
 .hero-video-background{position:relative;z-index:1;width:100%;pointer-events:none;display:flex;align-items:center;justify-content:center}
 .hero-video-background video{display:block;max-width:100%;max-height:calc(100svh - 64px);height:auto;width:auto}
