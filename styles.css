@@ -136,7 +136,7 @@ img{max-width:100%;height:auto;display:block}
     mask-composite: intersect;
     -webkit-mask-composite: destination-in;
 }
-.hero-video-background video{width:100%;height:100%;object-fit:cover;transform:scale(0.82)}
+.hero-video-background video{width:100%;height:100%;object-fit:cover}
 .hero-video-overlay{display:none}
 
 /* Hero Floating Cards — zona central */
