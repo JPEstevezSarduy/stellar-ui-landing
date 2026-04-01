@@ -57,17 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: activar capa de partículas al terminar
+    // Prefers-reduced-motion: pausar video de fondo si el usuario lo prefiere
     const heroVideo = document.querySelector('.hero-video-background video');
-    const ambientLayer = document.querySelector('.hero-ambient-layer');
-    if (heroVideo) {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            heroVideo.pause();
-            if (ambientLayer) ambientLayer.classList.add('active');
-        }
-        heroVideo.addEventListener('ended', () => {
-            if (ambientLayer) ambientLayer.classList.add('active');
-        });
+    if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        heroVideo.pause();
     }
 
     // Navbar scroll effect
