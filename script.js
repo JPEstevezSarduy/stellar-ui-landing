@@ -57,6 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
+    // Prefers-reduced-motion: pausar video de fondo si el usuario lo prefiere
+    const heroVideo = document.querySelector('.hero-video-background video');
+    if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        heroVideo.pause();
+    }
+
     // Navbar scroll effect
     const nav = document.querySelector('.navbar');
     window.addEventListener('scroll', () => {

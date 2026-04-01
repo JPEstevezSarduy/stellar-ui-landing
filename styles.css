@@ -432,6 +432,39 @@ img.avatar{background:none}
 .hero-cta{animation-delay:.3s}
 
 /* ============================================
+   PREFERS-REDUCED-MOTION
+   Accesibilidad: respeta la preferencia del sistema
+   del usuario de reducir movimiento/animaciones.
+   Afecta: video de fondo, marquee, transiciones,
+   animaciones de entrada y hover effects.
+   ============================================ */
+@media(prefers-reduced-motion: reduce){
+    /* Detener todas las animaciones y transiciones */
+    *, *::before, *::after{
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    /* Pausar el video de fondo del hero */
+    .hero-video-background video{
+        animation-play-state: paused;
+    }
+    /* Detener el marquee animado */
+    .marquee-track{
+        animation: none;
+    }
+    /* Quitar hover lifts en cards y botones */
+    .hcard:hover,
+    .btn-trial:hover,
+    .btn-signup:hover,
+    .bento-card:hover,
+    .course-card:hover{
+        transform: none;
+    }
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 
