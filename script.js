@@ -57,22 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: reproduce completo, luego loop infinito en los últimos 3 segundos
+    // Prefers-reduced-motion: pausar video de fondo si el usuario lo prefiere
     const heroVideo = document.querySelector('.hero-video-background video');
-    if (heroVideo) {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            heroVideo.pause();
-        }
-        let looping = false;
-        heroVideo.addEventListener('timeupdate', () => {
-            if (!looping && heroVideo.currentTime >= heroVideo.duration - 0.1) {
-                looping = true;
-            }
-            if (looping && heroVideo.currentTime >= heroVideo.duration - 0.1) {
-                heroVideo.currentTime = heroVideo.duration - 0.15;
-                heroVideo.play();
-            }
-        });
+    if (heroVideo && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        heroVideo.pause();
     }
 
     // Navbar scroll effect
