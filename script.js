@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 looping = true;
             }
             if (looping && heroVideo.currentTime >= heroVideo.duration - 0.1) {
-                heroVideo.currentTime = heroVideo.duration - 1;
+                heroVideo.currentTime = heroVideo.duration - 0.5;
                 heroVideo.play();
             }
         });
