@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             heroVideo.pause();
         }
 
-        const BOUNCE_POINT = 5;       // segundo al que regresa en reversa
+        const BOUNCE_POINT = 0;       // regresa hasta el principio en reversa
         const REVERSE_STEP = 1 / 30;  // ~30fps step size
         let reversing = false;
 
