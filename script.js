@@ -1,48 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Preloader Stars Generation
-    const starsContainer = document.getElementById('stars-container');
-    if (starsContainer) {
-        for (let i = 0; i < 80; i++) {
-            const star = document.createElement('div');
-            star.classList.add('preloader-star');
-            const size = Math.random() * 2 + 0.5;
-            star.style.width = `${size}px`;
-            star.style.height = `${size}px`;
-            star.style.left = `${Math.random() * 100}%`;
-            star.style.top = `${Math.random() * 100}%`;
-            star.style.opacity = Math.random() * 0.7 + 0.1;
-            starsContainer.appendChild(star);
-        }
-    }
-
-    // Preloader Percentage Logic
-    const preloader = document.getElementById('preloader');
-    const counterElement = document.getElementById('counter');
-    const lineProgress = document.getElementById('preloader-line');
-
-    if (preloader && counterElement && lineProgress) {
-        let count = 0;
-        const duration = 2000;
-        const interval = 20;
-
-        const timer = setInterval(() => {
-            count += (100 / (duration / interval));
-            if (count >= 100) {
-                count = 100;
-                clearInterval(timer);
-                setTimeout(() => {
-                    preloader.style.opacity = '0';
-                    setTimeout(() => {
-                        preloader.style.visibility = 'hidden';
-                        preloader.style.display = 'none';
-                    }, 600);
-                }, 400);
-            }
-            counterElement.textContent = Math.floor(count);
-            lineProgress.style.width = count + '%';
-        }, interval);
-    }
-
     // Scroll-triggered fade-in
     const obs = new IntersectionObserver((entries) => {
         entries.forEach(e => {
