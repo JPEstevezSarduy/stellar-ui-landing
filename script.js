@@ -80,7 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 loop.currentTime = loopStart;
                 loop.play().catch(() => {});
                 loop.style.opacity = '1';
-                intro.style.opacity = '0';
             }
         });
 
@@ -92,10 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Cuando intro termine, ocultarlo completamente
-        intro.addEventListener('ended', () => {
-            intro.style.display = 'none';
-        });
     }
 
     // Navbar scroll effect
