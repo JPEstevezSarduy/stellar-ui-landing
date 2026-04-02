@@ -57,38 +57,38 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: ping-pong parcial — rebota entre segundo 5 y el final
+    // Hero video: ping-pong — reproduce, al final retrocede frame a frame, luego vuelve adelante
     const heroVideo = document.querySelector('.hero-video-background video');
     if (heroVideo) {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             heroVideo.pause();
         }
 
-        const BOUNCE_POINT = 0;       // regresa hasta el principio en reversa
-        const REVERSE_STEP = 1 / 30;  // ~30fps step size
+        const FPS = 30;
+        const STEP = 1 / FPS;
         let reversing = false;
+        let bounceStart = 0;
 
-        // Cuando termina el forward, empieza a retroceder
+        heroVideo.addEventListener('loadedmetadata', () => {
+            bounceStart = Math.max(0, heroVideo.duration - 3);
+        });
+
         heroVideo.addEventListener('ended', () => {
             heroVideo.pause();
             reversing = true;
-            reversePlayback();
+            stepReverse();
         });
 
-        function reversePlayback() {
+        function stepReverse() {
             if (!reversing) return;
-
-            heroVideo.currentTime = Math.max(BOUNCE_POINT, heroVideo.currentTime - REVERSE_STEP);
-
-            if (heroVideo.currentTime <= BOUNCE_POINT) {
-                // Llegó al segundo 5 — vuelve a ir hacia adelante
+            heroVideo.currentTime = Math.max(bounceStart, heroVideo.currentTime - STEP);
+            if (heroVideo.currentTime <= bounceStart) {
                 reversing = false;
-                heroVideo.currentTime = BOUNCE_POINT;
+                heroVideo.currentTime = bounceStart;
                 heroVideo.play();
                 return;
             }
-
-            requestAnimationFrame(reversePlayback);
+            requestAnimationFrame(stepReverse);
         }
     }
 
