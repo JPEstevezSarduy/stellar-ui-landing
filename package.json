@@ -1,0 +1,26 @@
+{
+  "name": "proyecto-rs",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JPEstevezSarduy/stellar-ui-landing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/JPEstevezSarduy/stellar-ui-landing/issues"
+  },
+  "homepage": "https://github.com/JPEstevezSarduy/stellar-ui-landing#readme",
+  "devDependencies": {
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3"
+  }
+}
