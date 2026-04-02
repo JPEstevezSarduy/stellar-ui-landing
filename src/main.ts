@@ -5,7 +5,6 @@ document.head.appendChild(visStyle);
 
 document.addEventListener('DOMContentLoaded', () => {
     initScrollFadeIn();
-    initHeroBoomerang();
     initNavbarScroll();
     initHamburgerMenu();
     initTabs();
@@ -32,70 +31,6 @@ function initScrollFadeIn(): void {
     });
 }
 
-function initHeroBoomerang(): void {
-    const heroVideo = document.getElementById('heroVideo') as HTMLVideoElement | null;
-    if (!heroVideo) return;
-    const video: HTMLVideoElement = heroVideo;
-
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reducedMotion.matches) {
-        video.pause();
-        return;
-    }
-
-    let boomerangStart = 0;
-    let boomerangEnd = 0;
-    let isReversing = false;
-    let lastFrameTime = 0;
-    let animFrameId: number | null = null;
-    let boomerangActive = false;
-
-    const LOOP_DURATION = 3;
-
-    video.addEventListener('loadedmetadata', () => {
-        boomerangEnd = video.duration;
-        boomerangStart = Math.max(0, boomerangEnd - LOOP_DURATION);
-    });
-
-    video.addEventListener('ended', () => {
-        boomerangActive = true;
-        video.currentTime = boomerangStart;
-        video.play().catch(() => {});
-    });
-
-    video.addEventListener('timeupdate', () => {
-        if (!boomerangActive || isReversing) return;
-        if (video.currentTime >= boomerangEnd - 0.05) {
-            isReversing = true;
-            video.pause();
-            lastFrameTime = performance.now();
-            animFrameId = requestAnimationFrame(rewindLoop);
-        }
-    });
-
-    function rewindLoop(now: number): void {
-        if (!isReversing) return;
-        const delta = (now - lastFrameTime) / 1000;
-        lastFrameTime = now;
-
-        video.currentTime = Math.max(boomerangStart, video.currentTime - delta);
-
-        if (video.currentTime <= boomerangStart) {
-            isReversing = false;
-            video.currentTime = boomerangStart;
-            video.play().catch(() => {});
-        } else {
-            animFrameId = requestAnimationFrame(rewindLoop);
-        }
-    }
-
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden && animFrameId) {
-            cancelAnimationFrame(animFrameId);
-            isReversing = false;
-        }
-    });
-}
 
 function initNavbarScroll(): void {
     const nav = document.querySelector<HTMLElement>('.navbar');
