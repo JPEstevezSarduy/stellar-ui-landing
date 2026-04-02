@@ -57,40 +57,22 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: intro + live wallpaper con dual video crossfade
-    const intro = document.getElementById('heroIntro');
-    const loop = document.getElementById('heroLoop');
-
-    if (intro && loop) {
+    // Hero video: reproduce completo, luego loopea últimos 3s como fondo vivo
+    const heroVideo = document.getElementById('heroVideo');
+    if (heroVideo) {
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (reducedMotion.matches) { intro.pause(); return; }
+        if (reducedMotion.matches) heroVideo.pause();
 
-        const LOOP_DURATION = 3; // últimos 3 segundos como fondo vivo
         let loopStart = 0;
 
-        // Precargar el loop video en el punto correcto
-        loop.addEventListener('loadedmetadata', () => {
-            loopStart = Math.max(0, loop.duration - LOOP_DURATION);
-            loop.currentTime = loopStart;
+        heroVideo.addEventListener('loadedmetadata', () => {
+            loopStart = Math.max(0, heroVideo.duration - 3);
         });
 
-        // Cuando el intro está por terminar → crossfade al loop
-        intro.addEventListener('timeupdate', () => {
-            if (intro.duration && intro.currentTime >= intro.duration - 0.8) {
-                loop.currentTime = loopStart;
-                loop.play().catch(() => {});
-                loop.style.opacity = '1';
-            }
+        heroVideo.addEventListener('ended', () => {
+            heroVideo.currentTime = loopStart;
+            heroVideo.play().catch(() => {});
         });
-
-        // El loop se mantiene en los últimos 3 segundos infinitamente
-        loop.addEventListener('timeupdate', () => {
-            if (loop.duration && loop.currentTime >= loop.duration - 0.05) {
-                loop.currentTime = loopStart;
-                loop.play().catch(() => {});
-            }
-        });
-
     }
 
     // Navbar scroll effect
