@@ -121,9 +121,10 @@ img{max-width:100%;height:auto;display:block}
 .hero{padding:0;position:relative;overflow:hidden;margin-top:64px;background:#000;display:flex;align-items:center;justify-content:center}
 .hero::before{display:none}
 
-/* Hero Background Video — sin bordes, video completo */
+/* Hero Background Video — dual video stack */
 .hero-video-background{position:relative;z-index:1;width:100%;pointer-events:none;display:flex;align-items:center;justify-content:center}
-.hero-video-background video{display:block;max-width:100%;max-height:calc(100svh - 64px);height:auto;width:auto;transition:opacity 0.6s ease}
+.hero-video-background video{display:block;max-width:100%;max-height:calc(100svh - 64px);height:auto;width:auto;transition:opacity 0.8s ease}
+#heroLoop{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0}
 
 /* Hero Floating Cards — zona central */
 .hero-cards{position:relative;z-index:3;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:center;padding:24px;flex:1}

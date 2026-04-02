@@ -57,51 +57,44 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: ping-pong seamless con delta time preciso
-    const heroVideo = document.querySelector('.hero-video-background video');
-    if (heroVideo) {
+    // Hero video: intro + live wallpaper con dual video crossfade
+    const intro = document.getElementById('heroIntro');
+    const loop = document.getElementById('heroLoop');
+
+    if (intro && loop) {
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-        if (reducedMotion.matches) heroVideo.pause();
+        if (reducedMotion.matches) { intro.pause(); return; }
 
-        let isReversing = false;
-        let lastFrameTime = 0;
-        let animFrameId = null;
-        let bounceStart = 0;
+        const LOOP_DURATION = 3; // últimos 3 segundos como fondo vivo
+        let loopStart = 0;
 
-        heroVideo.addEventListener('loadedmetadata', () => {
-            bounceStart = Math.max(0, heroVideo.duration - 3);
+        // Precargar el loop video en el punto correcto
+        loop.addEventListener('loadedmetadata', () => {
+            loopStart = Math.max(0, loop.duration - LOOP_DURATION);
+            loop.currentTime = loopStart;
         });
 
-        // Video llega al final → empieza reversa
-        heroVideo.addEventListener('ended', () => {
-            heroVideo.pause();
-            isReversing = true;
-            lastFrameTime = performance.now();
-            animFrameId = requestAnimationFrame(rewindLoop);
+        // Cuando el intro está por terminar → crossfade al loop
+        intro.addEventListener('timeupdate', () => {
+            if (intro.duration && intro.currentTime >= intro.duration - 0.8) {
+                loop.currentTime = loopStart;
+                loop.play().catch(() => {});
+                loop.style.opacity = '1';
+                intro.style.opacity = '0';
+            }
         });
 
-        function rewindLoop(now) {
-            if (!isReversing) return;
-            const delta = (now - lastFrameTime) / 1000;
-            lastFrameTime = now;
-
-            heroVideo.currentTime = Math.max(bounceStart, heroVideo.currentTime - delta);
-
-            if (heroVideo.currentTime <= bounceStart) {
-                isReversing = false;
-                heroVideo.currentTime = bounceStart;
-                heroVideo.play().catch(() => {});
-                return;
+        // El loop se mantiene en los últimos 3 segundos infinitamente
+        loop.addEventListener('timeupdate', () => {
+            if (loop.duration && loop.currentTime >= loop.duration - 0.05) {
+                loop.currentTime = loopStart;
+                loop.play().catch(() => {});
             }
-            animFrameId = requestAnimationFrame(rewindLoop);
-        }
+        });
 
-        // Limpieza si el usuario navega fuera
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && animFrameId) {
-                cancelAnimationFrame(animFrameId);
-                isReversing = false;
-            }
+        // Cuando intro termine, ocultarlo completamente
+        intro.addEventListener('ended', () => {
+            intro.style.display = 'none';
         });
     }
 
