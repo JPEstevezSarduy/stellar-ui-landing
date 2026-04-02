@@ -57,39 +57,52 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: ping-pong — reproduce, al final retrocede frame a frame, luego vuelve adelante
+    // Hero video: ping-pong seamless con delta time preciso
     const heroVideo = document.querySelector('.hero-video-background video');
     if (heroVideo) {
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            heroVideo.pause();
-        }
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (reducedMotion.matches) heroVideo.pause();
 
-        const FPS = 30;
-        const STEP = 1 / FPS;
-        let reversing = false;
+        let isReversing = false;
+        let lastFrameTime = 0;
+        let animFrameId = null;
         let bounceStart = 0;
 
         heroVideo.addEventListener('loadedmetadata', () => {
             bounceStart = Math.max(0, heroVideo.duration - 3);
         });
 
+        // Video llega al final → empieza reversa
         heroVideo.addEventListener('ended', () => {
             heroVideo.pause();
-            reversing = true;
-            stepReverse();
+            isReversing = true;
+            lastFrameTime = performance.now();
+            animFrameId = requestAnimationFrame(rewindLoop);
         });
 
-        function stepReverse() {
-            if (!reversing) return;
-            heroVideo.currentTime = Math.max(bounceStart, heroVideo.currentTime - STEP);
+        function rewindLoop(now) {
+            if (!isReversing) return;
+            const delta = (now - lastFrameTime) / 1000;
+            lastFrameTime = now;
+
+            heroVideo.currentTime = Math.max(bounceStart, heroVideo.currentTime - delta);
+
             if (heroVideo.currentTime <= bounceStart) {
-                reversing = false;
+                isReversing = false;
                 heroVideo.currentTime = bounceStart;
-                heroVideo.play();
+                heroVideo.play().catch(() => {});
                 return;
             }
-            requestAnimationFrame(stepReverse);
+            animFrameId = requestAnimationFrame(rewindLoop);
         }
+
+        // Limpieza si el usuario navega fuera
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && animFrameId) {
+                cancelAnimationFrame(animFrameId);
+                isReversing = false;
+            }
+        });
     }
 
     // Navbar scroll effect
