@@ -57,21 +57,64 @@ document.addEventListener('DOMContentLoaded', () => {
         obs.observe(el);
     });
 
-    // Hero video: reproduce completo, luego loopea últimos 3s como fondo vivo
+    // Hero video: intro completo → boomerang live en últimos 3s
     const heroVideo = document.getElementById('heroVideo');
     if (heroVideo) {
         const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
         if (reducedMotion.matches) heroVideo.pause();
 
-        let loopStart = 0;
+        let boomerangStart = 0;
+        let boomerangEnd = 0;
+        let isReversing = false;
+        let lastFrameTime = 0;
+        let animFrameId = null;
+        let boomerangActive = false;
 
         heroVideo.addEventListener('loadedmetadata', () => {
-            loopStart = Math.max(0, heroVideo.duration - 3);
+            boomerangEnd = heroVideo.duration;
+            boomerangStart = Math.max(0, boomerangEnd - 3);
         });
 
+        // Intro termina → activa modo boomerang
         heroVideo.addEventListener('ended', () => {
-            heroVideo.currentTime = loopStart;
+            boomerangActive = true;
+            heroVideo.currentTime = boomerangStart;
             heroVideo.play().catch(() => {});
+        });
+
+        // Durante boomerang: al llegar al final → reversa
+        heroVideo.addEventListener('timeupdate', () => {
+            if (!boomerangActive || isReversing) return;
+            if (heroVideo.currentTime >= boomerangEnd - 0.05) {
+                isReversing = true;
+                heroVideo.pause();
+                lastFrameTime = performance.now();
+                animFrameId = requestAnimationFrame(rewindLoop);
+            }
+        });
+
+        function rewindLoop(now) {
+            if (!isReversing) return;
+            const delta = (now - lastFrameTime) / 1000;
+            lastFrameTime = now;
+
+            heroVideo.currentTime = Math.max(boomerangStart, heroVideo.currentTime - delta);
+
+            if (heroVideo.currentTime <= boomerangStart) {
+                isReversing = false;
+                heroVideo.currentTime = boomerangStart;
+                heroVideo.play().catch(() => {});
+            } else {
+                animFrameId = requestAnimationFrame(rewindLoop);
+            }
+        }
+
+        // Limpieza al cambiar de pestaña
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && animFrameId) {
+                cancelAnimationFrame(animFrameId);
+                isReversing = false;
+            }
         });
     }
 
